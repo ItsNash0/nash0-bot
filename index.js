@@ -12,9 +12,11 @@ client.on("message", (msg) => {
 	if (msg.content === "ping") {
 		msg.reply("pong")
 	}
-	switch (msg.content) {
+	switch (msg.content.toLowerCase()) {
 		case "vargas":
-			msg.reply("es tonto")
+			msg.reply(
+				"no sabe conducir automatico y no se cansa de pedirle a mi amo el puto mercedes."
+			)
 			break
 		case "nacho":
 			msg.reply(
