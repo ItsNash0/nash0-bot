@@ -1,6 +1,6 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
-const ytdl = require("ytdl-core")
+const ytdl = require("ytdl-core-discord")
 
 client.on("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`)
@@ -23,10 +23,10 @@ client.on("message", async (message) => {
 		// Only try to join the sender's voice channel if they are in one themselves
 		if (message.member.voice.channel) {
 			const connection = await message.member.voice.channel.join()
+
 			connection.play(
-				ytdl("https://www.youtube.com/watch?v=dQw4w9WgXcQ", {
-					filter: "audioonly",
-				})
+				await ytdl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"),
+				{ type: "opus" }
 			)
 		} else {
 			message.reply("You need to join a voice channel first!")
