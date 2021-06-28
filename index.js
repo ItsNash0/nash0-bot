@@ -1,12 +1,29 @@
 const Discord = require("discord.js")
 const client = new Discord.Client()
 const ytdl = require("ytdl-core-discord")
+require("dotenv").config()
 
 client.on("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`)
 })
 
 client.login(process.env.TOKEN)
+
+// guild.fetchAuditLogs().then((audit) => msg.reply(audit.entries.first()))
+
+client.on("message", async (msg) => {
+	if (msg.content === "kapasao") {
+		var audit = (await msg.guild.fetchAuditLogs()).entries.first()
+
+		var changes = audit.changes || "null"
+
+		msg.channel.send(
+			`${audit.action} by ${audit.executor} to ${
+				audit.target?.username || "🤷🏻‍♂️"
+			} did ${changes[0].key || "🤷🏻‍♂️"}`
+		)
+	}
+})
 
 client.on("message", (msg) => {
 	if (msg.content === "ping") {
@@ -30,9 +47,6 @@ client.on("message", (msg) => {
 			msg.reply(
 				"Python is a programming language that lets you work more quickly and integrate your systems more effectively."
 			)
-			break
-		case "kapasao":
-			guild.fetchAuditLogs().then((audit) => msg.reply(audit.entries.first()))
 			break
 
 		default:
