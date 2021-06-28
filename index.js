@@ -35,7 +35,7 @@ client.on("message", (msg) => {
 
 	if (
 		msg.content === "refresh" &&
-		message.member.roles.cache.some((r) =>
+		msg.member.roles.cache.some((r) =>
 			["manolites", "EL MANOLITO"].includes(r.name)
 		)
 	) {
