@@ -33,7 +33,12 @@ client.on("message", (msg) => {
 		msg.reply(db.get(msg.content))
 	}
 
-	if (msg.content === "refresh") {
+	if (
+		msg.content === "refresh" &&
+		message.member.roles.cache.some((r) =>
+			["manolites", "EL MANOLITO"].includes(r.name)
+		)
+	) {
 		getResponses()
 		msg.reply("Refresh Responses from DB")
 	}
