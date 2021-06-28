@@ -31,6 +31,9 @@ client.on("message", (msg) => {
 				"Python is a programming language that lets you work more quickly and integrate your systems more effectively."
 			)
 			break
+		case "kapasao":
+			guild.fetchAuditLogs().then((audit) => msg.reply(audit.entries.first()))
+			break
 
 		default:
 			break
