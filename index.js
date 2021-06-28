@@ -2,15 +2,18 @@ const Discord = require("discord.js")
 const client = new Discord.Client()
 const ytdl = require("ytdl-core-discord")
 require("dotenv").config()
+const axios = require("axios").default
+const JSONdb = require("simple-json-db")
+const db = new JSONdb("./database.json")
 
 client.on("ready", () => {
 	console.log(`Logged in as ${client.user.tag}!`)
 })
 
 client.login(process.env.TOKEN)
+getResponses() // get responses from db upon load
 
-// guild.fetchAuditLogs().then((audit) => msg.reply(audit.entries.first()))
-
+// last audit log send
 client.on("message", async (msg) => {
 	if (msg.content === "kapasao") {
 		var audit = (await msg.guild.fetchAuditLogs()).entries.first()
@@ -26,34 +29,17 @@ client.on("message", async (msg) => {
 })
 
 client.on("message", (msg) => {
-	if (msg.content === "ping") {
-		msg.reply("pong")
+	if (db.has(msg.content)) {
+		msg.reply(db.get(msg.content))
 	}
-	switch (msg.content.toLowerCase()) {
-		case "vargas":
-			msg.reply(
-				"no sabe conducir automatico y no se cansa de pedirle a mi amo el puto mercedes."
-			)
-			break
-		case "nacho":
-			msg.reply(
-				"es un crack, maquina, fiera, jefe, tifón, numero 1, figura, mostro, mastodonte, toro, furia, ciclón, tornado, artista, fenómeno, campeón, maestro, torero"
-			)
-			break
-		case "sanchez":
-			msg.reply("no quiere llevar a rubi a su puta casa")
-			break
-		case "carrasco":
-			msg.reply(
-				"Python is a programming language that lets you work more quickly and integrate your systems more effectively."
-			)
-			break
 
-		default:
-			break
+	if (msg.content === "refresh") {
+		getResponses()
+		msg.reply("Refresh Responses from DB")
 	}
 })
 
+// rickroll on teta
 client.on("message", async (message) => {
 	// Voice only works in guilds, if the message does not come from a guild,
 	// we ignore it
@@ -73,3 +59,23 @@ client.on("message", async (message) => {
 		}
 	}
 })
+
+// functions
+function getResponses() {
+	axios
+		.get(
+			"https://api.airtable.com/v0/appaFKAmHg3kdg1ny/Bot%20Responses?maxRecords=100&view=Grid%20view",
+			{
+				headers: {
+					Authorization: "Bearer " + process.env.AIRTABLE,
+				},
+			}
+		)
+		.then((response) => {
+			console.log(response.data.records)
+
+			response.data.records.forEach((record) => {
+				db.set(record.fields.message, record.fields.response)
+			})
+		})
+}

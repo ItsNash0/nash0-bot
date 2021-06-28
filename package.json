@@ -19,8 +19,11 @@
   "homepage": "https://github.com/ItsNash0/nash0-bot#readme",
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
+    "airtable": "^0.11.1",
+    "axios": "^0.21.1",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
+    "simple-json-db": "^1.2.3",
     "ytdl-core-discord": "^1.3.1"
   }
 }
