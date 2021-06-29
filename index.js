@@ -44,6 +44,17 @@ client.on("message", (msg) => {
 	}
 })
 
+// Set the bot's presence (activity and status)
+client.on("ready", () => {
+	client.user.setPresence({
+		activity: {
+			name: "xoxoni.com",
+			type: "WATCHING",
+		},
+		status: "idle",
+	})
+})
+
 // rickroll on teta
 client.on("message", async (message) => {
 	// Voice only works in guilds, if the message does not come from a guild,
@@ -77,8 +88,6 @@ function getResponses() {
 			}
 		)
 		.then((response) => {
-			console.log(response.data.records)
-
 			response.data.records.forEach((record) => {
 				db.set(record.fields.message, record.fields.response)
 			})
