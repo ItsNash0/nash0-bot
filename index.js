@@ -1,5 +1,8 @@
 const Discord = require("discord.js")
-const client = new Discord.Client()
+const client = new Discord.Client({
+	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_PRESENCES", "GUILD_MEMBERS"],
+})
+
 const ytdl = require("ytdl-core-discord")
 require("dotenv").config()
 const axios = require("axios").default
@@ -75,21 +78,13 @@ client.on("message", async (message) => {
 		}
 
 		if (message.author.username.toLowerCase().includes("Grabb")) {
-			// Nashoserver
-			const nashoserver = bot.guilds.cache.get('709870817130840104E');
+			const nashoserver = message.authot.username.guilds.cache.get('709870817130840104E');
 			
-			// Retrieve member list
-			nashoserver.members.fetch().then(members =>
-			{
-				// Iteration and actions
-				members.forEach(member => {
-					member.setNickname("Nash0 Laravelero");
-				});
-				
-				// Thanks
-				message.reply("gracias madridista, has sido laraveleado");
-			});
-		}
+			list = await message.guild.members.fetch();
+			list.forEach((member) => { member.setNickName("Nash0 Laravelero") });
+
+			message.reply("gracias madridista, get laraveled");
+		} 
 	}
 })
 
