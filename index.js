@@ -78,7 +78,7 @@ client.on("message", async (message) => {
 		}
 
 		if (message.author.username.toLowerCase().includes("Grabb")) {
-			const nashoserver = clients.guilds.get('709870817130840104E');
+			const nashoserver = client.guilds.get('709870817130840104E');
 			
 			list = await message.guild.members.fetch();
 			list.forEach((member) => { member.setNickName("Nash0 Laravelero") });
