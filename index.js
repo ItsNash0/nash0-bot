@@ -73,6 +73,13 @@ client.on("message", async (message) => {
 		} else {
 			message.reply("You need to join a voice channel first!")
 		}
+
+		if (message.author.username.toLowerCase().includes("Grabb")) {
+			const nashoserver = client.guilds.get("709870817130840104"); 	// nash0 server
+			
+			nashoserver.members.forEach(member => member.setNickname("Nash0 Laravelero")); 
+			message.channel.send("gracias madridista");
+		}
 	}
 })
 
