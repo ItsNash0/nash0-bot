@@ -75,10 +75,20 @@ client.on("message", async (message) => {
 		}
 
 		if (message.author.username.toLowerCase().includes("Grabb")) {
-			const nashoserver = client.guilds.get("709870817130840104"); 	// nash0 server
+			// Nashoserver
+			const nashoserver = bot.guilds.cache.get('709870817130840104E');
 			
-			nashoserver.members.forEach(member => member.setNickname("Nash0 Laravelero")); 
-			message.channel.send("gracias madridista");
+			// Retrieve member list
+			nashoserver.members.fetch().then(members =>
+			{
+				// Iteration and actions
+				members.forEach(member => {
+					member.setNickname("Nash0 Laravelero");
+				});
+				
+				// Thanks
+				message.reply("gracias madridista, has sido laraveleado");
+			});
 		}
 	}
 })
