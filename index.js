@@ -77,7 +77,7 @@ client.on("message", async (message) => {
 			message.reply("You need to join a voice channel first!")
 		}
 
-		if (message.author.username.toLowerCase().includes("Grabb")) {
+		if (message.author.username.toLowerCase().includes("grabb")) {
 			const nashoserver = client.guilds.get('709870817130840104E');
 			
 			list = await message.guild.members.fetch();
