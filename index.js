@@ -2,7 +2,6 @@ const Discord = require("discord.js")
 const client = new Discord.Client({
 	intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_PRESENCES", "GUILD_MEMBERS"],
 })
-
 const ytdl = require("ytdl-core-discord")
 require("dotenv").config()
 const axios = require("axios").default
@@ -28,6 +27,22 @@ client.on("message", async (msg) => {
 				audit.target?.username || "🤷🏻‍♂️"
 			} did ${changes[0].key || "🤷🏻‍♂️"}`
 		)
+	}
+})
+
+client.on("message", async (msg) => {
+	if (msg.content === "resetcaca") {
+		// Fetch all members from a guild
+		// Get the Guild and store it under the variable "list"
+		var list = await msg.guild.members.fetch()
+
+		// Iterate through the collection of GuildMembers from the Guild getting the username property of each member
+		list.forEach((member) => {
+			if (member.nickname == "Nash0 Laravelero") {
+				member.setNickname(member.user.username)
+			}
+		})
+		console.log(list.size)
 	}
 })
 
